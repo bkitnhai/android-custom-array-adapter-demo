@@ -72,8 +72,9 @@ public class CustomListActivity extends Activity {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			// getting JSON string from URL
-			JSONObject json = jParser.makeHttpRequest("http://wwww.oslophone.com/server/CategoryParse.php", "GET", params);
-			_("test"+json.toString());
+			JSONArray json = jParser.makeHttpRequest("http://www.oslophone.com/server/CategoryParse.php", "GET", params);
+			_("test"+json);
+
 			return null;
 		}
 
@@ -81,6 +82,7 @@ public class CustomListActivity extends Activity {
 		 * After completing background task Dismiss the progress dialog
 		 * **/
 		protected void onPostExecute(String file_url) {
+
 
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
