@@ -3,6 +3,8 @@
     package="com.codepath.example.customadapterdemo"
     android:versionCode="1"
     android:versionName="1.0" >
+    <!--  Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         android:minSdkVersion="14"
