@@ -5,22 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class CustomListActivity extends Activity {
 
@@ -31,6 +23,8 @@ public class CustomListActivity extends Activity {
 
 	// products JSONArray
 	JSONArray products = null;
+
+	JSONArray json;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,9 +40,16 @@ public class CustomListActivity extends Activity {
 
 	private void populateUsersList() {
 		// Construct the data source
-		ArrayList<User> arrayOfUsers = User.getUsers();
+		ArrayList<DataPhone> arrayOfDataForiPhones =  new ArrayList<DataPhone>(); //DataPhone.getUsers();
+		for (int i = 0; i < json.length(); i++) {
+			try {
+				arrayOfDataForiPhones.add(new DataPhone(json.getJSONObject(i).getString("Name")));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 		// Create the adapter to convert the array to views
-		CustomUsersAdapter adapter = new CustomUsersAdapter(this, arrayOfUsers);
+		CustomUsersAdapter adapter = new CustomUsersAdapter(this, arrayOfDataForiPhones);
 		// Attach the adapter to a ListView
 		ListView listView = (ListView) findViewById(R.id.lvUsers);
 		listView.setAdapter(adapter);
@@ -72,8 +73,14 @@ public class CustomListActivity extends Activity {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			// getting JSON string from URL
-			JSONArray json = jParser.makeHttpRequest("http://www.oslophone.com/server/CategoryParse.php", "GET", params);
-			_("test"+json);
+			json = jParser.makeHttpRequest("http://www.oslophone.com/server/CategoryParse.php", "GET", params);
+			try {
+				_("test"+json.getJSONObject(0).getString("Name"));
+				_("test"+json.getJSONObject(1));
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 
 			return null;
 		}
